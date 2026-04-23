@@ -14,7 +14,7 @@ mongoConnection()
 app.use(cookieParser())
 app.use(cors({
     //origin:['http://localhost:5173'],
-    origin:['http://localhost:5173', 'https://social-connect-ivory.vercel.app/'],
+    origin:['http://localhost:5173', 'https://social-connect-ivory.vercel.app'],
     //origin:true,
     credentials:true
 }))
