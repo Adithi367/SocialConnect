@@ -6,7 +6,7 @@ export default function CallBack() {
     //     console.log("Button clicked in Child component")
     // }
     const handleSubmit=useCallback(()=>{
-        
+        console.log('')
     },[])
   return (
     <div>
