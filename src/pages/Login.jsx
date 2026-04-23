@@ -15,10 +15,12 @@
 // }
 import React, { useState } from 'react'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 export default function Login() {
+  const navigate=useNavigate()
   const [form,setForm]=useState({
         
         email:'',
@@ -44,6 +46,7 @@ export default function Login() {
             
                 password:''
             })
+            navigate('/addpost')
 
         } catch (error) {
             console.log(error)
@@ -79,9 +82,7 @@ export default function Login() {
           Register here
         </a>
       </p>
-      <Link to="/register" className="mt-3 text-blue-800 hover:underline">
-        Don't have an account? Register here
-      </Link>
+      
       
 
     </div>

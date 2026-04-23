@@ -2,13 +2,14 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import UserContext from '../context/UserContext'
 import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 export default function AddPost() {
     const [caption,setCaption]=useState("")
     //const [media,setMedia]=useState(null)
     const [media,setMedia]=useState([])
     const [location,setLocation]=useState("")
     const { createPost } = useContext(UserContext);
-
+  const navigate=useNavigate()
     const handleSubmit=async(e)=>{
         e.preventDefault()
         try {
@@ -85,6 +86,8 @@ export default function AddPost() {
      <button type="submit" className="btn btn-primary w-full mt-5">Submit</button>
    </form>
  </div>
+ <button className="btn btn-secondary mt-5" onClick={()=>navigate('/mypost')}>My post</button>
+ <button className="btn btn-secondary mt-5" onClick={()=>navigate('/allpost')}>All post</button>
 </div>
     </div>
   )
