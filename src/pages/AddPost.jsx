@@ -22,8 +22,10 @@ export default function AddPost() {
             // for(let i=0;i<media.length;i++){
             //     formData.append("media",media[i])
             // }
-            await createPost({caption,location,media})
-            alert("Post Created Successfully!") 
+            const res=await createPost({caption,location,media})
+            if(res.data.success){
+              alert(res.data.message)
+            }
             
             
                 
