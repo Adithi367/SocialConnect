@@ -18,6 +18,7 @@ app.use(cors({
     //origin:true,
     credentials:true
 }))
+app.options("*", cors());
 
 const PORT=process.env.PORT
 app.get('/test',(req,res)=>{
