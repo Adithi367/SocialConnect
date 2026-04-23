@@ -67,16 +67,27 @@ export const getAllPost=async(req,res)=>{
         const page=Math.max(Number(req.query.page)|| 1,1) //first 1 is default val second 1 is min val of page number
         const limit=Math.min(Number(req.query.limit)||5,20);
         const skip=(page-1)*limit
+        const search=req.query.search
+        //const posts=await Post.find({
+            //multiple conditions use or and use array
+        //     $or: [
+        //         {location:"Mangalore"},
+        //         {likeCount:{$gt:10}}
+        //     ]
+        // })
+        //find({likeCount:{$not:{$gt:10}}})//get posts with likes count not greater than 10
+        // find({
+        // location:{
+        //     $in:["Mangalore","Udupi","Bangalore"]
+        // }})
         const posts=await Post.find()
         .populate("userId","name profilePic")
         .sort({createdAt:-1})
         .skip(skip)
         .limit(limit)
-        
-
+        //.select('caption likes') to select specific fields from model and - means exclude that field
         const totalPosts=await Post.countDocuments();
         const totalpages=Math.ceil(totalPosts/limit);
-
         return res.status(200).json({
             success:true,
             message:"All Posts retreived successfully",
@@ -89,7 +100,6 @@ export const getAllPost=async(req,res)=>{
                 hasPrevPage:page>1
             }
         })
-        
     } catch (error) {
         console.log(error)
         res.status(500).json({
@@ -154,5 +164,46 @@ export const deletePost=async(req,res)=>{
             success:false,
             message:"Internal Server Error"
         })
+    }
+}
+
+
+export const likePost=async(req,res)=>{
+    try {
+        const userId=req.user.id;
+        const postId=req.params.id;
+        await Post.findByIdAndUpdate(postId,{
+            $push:{
+                likes: {
+                    likedBy:userId
+                }
+            }
+        },{new:true})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            success:false,
+            message:"Internal Server Error"
+        })
+    }
+}
+export const dislikePost=async(req,res)=>{
+    try {
+        const userId=req.user.id;
+        const postId=req.params.id;
+        await Post.findByIdAndUpdate(postId,{
+            $pull:{
+                likes: {
+                    likedBy:userId
+                }
+            }
+        },{new:true})
+        //  await Post.findByIdAndUpdate(postId,{
+        //     $pop:{
+        //         media: -1   
+        //     }
+        // },{new:true})
+    } catch (error) {
+        
     }
 }

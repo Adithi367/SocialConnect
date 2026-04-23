@@ -13,7 +13,9 @@ app.use(express.json())
 mongoConnection()
 app.use(cookieParser())
 app.use(cors({
-    origin:['http://localhost:5173'],
+    //origin:['http://localhost:5173'],
+    origin:['https://social-connect-qjig9we0q-adithi367s-projects.vercel.app'],
+    
     credentials:true
 }))
 
